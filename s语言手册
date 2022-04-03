@@ -2,7 +2,7 @@
                                                                               Joshua Sun
 1、社区
   http://github.com/guodongsun/s-lang
-  s 语言作者：
+  s语言作者：
     Joshua Sun
   contributors:
     Joshua Sun
@@ -69,10 +69,12 @@
 
   7.2、数据类型
     s语言中，所有的类型，都是protocol，程序运行的基本单位是thing，共有3种基础类型：
-    整型:tInt，字符(串):tString，布尔型：tBool。
+      .整型：tInt
+      .字符(串)：tString
+      .布尔型：tBool
     其它语程序言中的byte、short、float、double、char等类型，s语言中利用智能的类型优化子系统进行处理（编译时+运行时）。
 
-  7.3、thing（物体）
+  7.3、thing
     s语言中，代码组织/包装的基本单位是thing，thing的成员可以包含属性、方法，thing成员的可见性，只有public、provite两个，public对外部的thing可见，provite，只对该thing内部可见。
     每个thing都要follow（遵循）协议，follow同一协议的thing，可视作同一类型。
     thing可以初始化，但没有面向对象语言中class（类）、object（实例）的含义。
