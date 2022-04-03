@@ -18,10 +18,10 @@
   .版本升级：获得最新语言层面核心业务/系统解决方案
 
 3、语言目标/背景
-  在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及开发中的生产效率低下、跨端/平台应用复杂等实际问题，寻求/提供一种解决方案。
+  在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及开发中的生产效率低下、跨端/平台应用复杂等实际问题，探索/寻求/提供一种解决方案。
 
-4、语言哲学/思想/方法论
-  s语言，不同于面向过程的语言，如C，也不同于面向对象的语言如Java，s语言，将世界抽象成两个核心部分：
+4、语言设计哲学/思想/方法论
+  不同于面向过程的语言，如C，也不同于面向对象的语言如Java，s语言，是面向协议的语言，即pop（Object Oriented Programming），将世界抽象成两个核心部分：
     .protocol（协议）
     .thing（物体）
   protocol，定义thing的行为(函数/方法签名)，thing是代码执行的基本单元(实现函数/方法)，thing follow(遵循) protocol:
@@ -42,14 +42,14 @@
   |-Config
     |-Public
     |-Config1
-    |_ Config2
+    |_Config2
   |-Library
     |-System
     |-3rd
-    |_ self
+    |_self
   Target
     |-App1
-    |_ App2
+    |_App2
   |_ Test
 
 7、s语言教程
@@ -89,10 +89,10 @@
         public tBool b= true;
 
         init(){
-          output.println(this.class);
+          output.println(this.thing);
         }
         public test(){
-          output.println(self.s);
+          output.println(self.str);
         }
     }
     thingA.test();
@@ -107,8 +107,8 @@
     this：   用于指向当前的thing
 
 7.4、protocol
-s语言中，用protocol约束代码的行为，规定代码的类型。
-protocol作为粘合剂，将各种thing粘合在一起，构成一个可运行的程序。
+  s语言中，用protocol约束代码的行为，规定代码的类型。
+  protocol作为粘合剂，将各种thing粘合在一起，构成一个可运行的程序。
 
 7.5、运行时错误处理
 
