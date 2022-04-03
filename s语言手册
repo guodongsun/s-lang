@@ -21,7 +21,7 @@
   在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及开发中的生产效率低下、跨端/平台应用复杂等实际问题，探索/寻求/提供一种解决方案。
 
 4、语言设计哲学/思想/方法论
-  不同于面向过程的语言，如C，也不同于面向对象的语言如Java，s语言，是面向协议的语言，即pop（Object Oriented Programming），将世界抽象成两个核心部分：
+  不同于面向过程的语言，如C，也不同于面向对象的语言如Java，s语言，是面向协议的语言，即POP（Protocol Oriented Programming），将世界抽象成两个核心部分：
     .protocol（协议）
     .thing（物体）
   protocol，定义thing的行为(函数/方法签名)，thing是代码执行的基本单元(实现函数/方法)，thing follow(遵循) protocol:
