@@ -73,38 +73,38 @@
     其它语程序言中的byte、short、float、double、char等类型，s语言中利用智能的类型优化子系统进行处理（编译时+运行时）。
 
   7.3、thing（物体）
-  s语言中，代码组织/包装的基本单位是thing，thing的成员可以包含属性、方法，thing成员的可见性，只有public、provite两个，public对外部的thing可见，provite，只对该thing内部可见。
-  每个thing都要follow（遵循）协议，follow同一协议的thing，可视作同一类型。
-  thing可以初始化，但没有面向对象语言中class（类）、object（实例）的含义。
-  例：
-    use “system/io/output”
-    protocol A{
-      test();
-    }
-    thing thingA follow A(){
-        static{
-          public tInt i = 1.0;
-          provite tString str= “2.0”;
-        }
-        public tBool b= true;
+    s语言中，代码组织/包装的基本单位是thing，thing的成员可以包含属性、方法，thing成员的可见性，只有public、provite两个，public对外部的thing可见，provite，只对该thing内部可见。
+    每个thing都要follow（遵循）协议，follow同一协议的thing，可视作同一类型。
+    thing可以初始化，但没有面向对象语言中class（类）、object（实例）的含义。
+    例：
+      use “system/io/output”
+      protocol A{
+        test();
+      }
+      thing thingA follow A(){
+          static{
+            public tInt i = 1.0;
+            provite tString str= “2.0”;
+          }
+          public tBool b= true;
 
-        init(){
-          output.println(this.thing);
-        }
-        public test(){
-          output.println(self.str);
-        }
-    }
-    thingA.test();
-    a thingB = thingA.clone();
-    thingB.init().test();
-    
-    代码说明：
-    init：   该方法为内置方法，用于初始化，
-    clone：  该方法为内置方法，用于克隆该方法作用的thing
-    static： 关键字，用于包裹thing多次clone时的代码共享部分
-    self:		 该属性为内置属性，用于访问static包括的属性
-    this：   用于指向当前的thing
+          init(){
+            output.println(this.thing);
+          }
+          public test(){
+            output.println(self.str);
+          }
+      }
+      thingA.test();
+      a thingB = thingA.clone();
+      thingB.init().test();
+
+      代码说明：
+      init：   该方法为内置方法，用于初始化，
+      clone：  该方法为内置方法，用于克隆该方法作用的thing
+      static： 关键字，用于包裹thing多次clone时的代码共享部分
+      self:		 该属性为内置属性，用于访问static包括的属性
+      this：   用于指向当前的thing
 
 7.4、protocol
   s语言中，用protocol约束代码的行为，规定代码的类型。
