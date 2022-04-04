@@ -8,26 +8,29 @@
     Joshua Sun
 
 2、语言特点
-  .极致运行时效率：无垃圾回收器
-  .原生功能丰富：语言层面，支持高并发、高性能、分布式(事务)
-  .类型系统：弱类型，类型推导、转换、优化
-  .极简原则：最大化屏蔽Error、Warning，容易快速Debug
-  .兼容性：向后多本兼容
-  .高质量库：插件、程序库安全稳定
-  .语言级别，代码分层，(明确开发人员分工)，提高开发效率
-  .版本升级：获得最新语言层面核心业务/系统解决方案
+  . 极致运行时效率：无垃圾回收器
+  . 原生功能丰富：语言层面，支持高并发、高性能、分布式(事务)
+  . 类型系统：弱类型，类型推导、转换、优化
+  . 极简原则：最大化屏蔽Error、Warning，容易快速Debug
+  . 兼容性：向后多本兼容
+  . 高质量库：插件、程序库安全稳定
+  . 语言级别，代码分层，(明确开发人员分工)，提高开发效率
+  . 版本升级：获得最新语言层面核心业务/系统解决方案
+  . 行数限制：单个文件有效代码函数限制
 
 3、语言目标/背景
   在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及开发中的生产效率低下、跨端/平台应用复杂等实际问题，探索/寻求/提供一种解决方案。
 
 4、语言设计哲学/思想/方法论
   不同于面向过程的语言，如C，也不同于面向对象的语言如Java，S语言，是面向协议的语言，即POP（Protocol Oriented Programming），将世界抽象成两个核心部分：
-    .protocol（协议）
-    .thing（物体）
+    . protocol（协议）
+    . thing（物体）
   protocol，定义thing的行为(函数/方法签名)，thing是代码执行的基本单元(实现函数/方法)，thing follow(遵循) protocol:
-    .1个thing必须follow至少1个protocol
-    .1个protocol可以被多个thing follow
-    .一到多个thing，通过protocol，组合成一个s语言程序(文件)。
+    . 1个thing必须follow至少1个protocol
+    . 1个protocol可以被多个thing follow
+    . 一到多个thing，通过protocol，组合成一个s语言程序(文件)。
+    . 每个thing必需follow（遵循）至少1个协议，follow同一协议的thing，可视作同一类型。
+    . thing可以定制(参数化），但没有面向对象语言中class（类）、object（实例）的含义。
 
 5、搭建开发环境
   下载编译器sc压缩包，如sc-0.1.linux-amd64.zip，解压到目录，即可使用，
@@ -69,28 +72,36 @@
 
   7.2、数据类型
     s语言中，所有的类型，都是protocol，程序运行的基本单位是thing，共有3种基础类型：
-      .数字型：tNumber
-      .字符(串)：tString
-      .布尔型：tBool
-    其它语程序言中的byte、short、float、double、char等类型，s语言中利用智能的类型优化子系统进行处理（编译时+运行时）。
+      . 数字型：tNumber
+      . 字符(串)：tString
+      . 布尔型：tBool
+    其它程序语言中的byte、short、float、double、char等类型，s语言中利用智能的类型优化子系统进行处理（编译时+运行时）。
 
   7.3、thing
-    s语言中，代码组织/包装的基本单位是thing，thing的成员可以包含属性、方法，thing成员的可见性，只有public、provite两个，public对外部的thing可见，provite，只对该thing内部可见。
-    每个thing都要follow（遵循）协议，follow同一协议的thing，可视作同一类型。
-    thing可以初始化，但没有面向对象语言中class（类）、object（实例）的含义。
+    s语言中，代码组织/包装的基本单位是thing，thing的成员可以包含属性、方法
+    thing特性：
+      . thing成员的可见性有3个：
+        . public对外部的thing可见
+        . protected对被组合使用的多个protocol可见
+        . provite，只对该thing内部可见
+      . public、protected方法，必需在protocol中先定义，thing通过follow获得，
+      . thing可见性、follow协议、协议cite，这3点，在s语言中，共同实现了Java语言中的，封装、继承、多态。
+      . 每个thing必需follow（遵循）至少1个协议，follow同一协议的thing，可视作同一类型。
+      . thing可以定制(参数化），但没有面向对象语言中class（类）、object（实例）的含义。
+    thing通过“define”关键字创建。
     例：
       use “system/io/output”
       protocol A{
         test();
       }
-      thing thingA follow A(){
+      define thingA follow A(){
           static{
             public tNumber i = 1.0;
             provite tString str= “2.0”;
           }
           public tBool b= true;
 
-          init(){
+          get(){
             output.println(this.thing);
           }
           public test(){
@@ -99,10 +110,10 @@
       }
       thingA.test();
       a thingB = thingA.clone();
-      thingB.init().test();
+      thingB.get().test();
 
       代码说明：
-      init：   该方法为内置方法，用于初始化，
+      get：   该方法为内置方法，用于定制thing，可以有多个get，通过参数类型及个数，重载
       clone：  该方法为内置方法，用于克隆该方法作用的thing
       static： 关键字，用于包裹thing多次clone时的代码共享部分
       self：   该属性为内置属性，用于访问static包括的属性
@@ -111,6 +122,12 @@
   7.4、protocol
     s语言中，用protocol约束代码的行为，规定代码的类型。
     protocol作为粘合剂，将各种thing粘合在一起，构成一个可运行的程序。
+    protocol特性：
+      . protocol，包括多个属性、方法，可用public、protected、private修饰
+      . 属性、方法，可以初始化，初始化后，thing follow该协议时，不能重写
+      . 1个protocol可以cite(引用/组合)至少1个其它的protocol
+        多个被cite的protocol之间，protected修饰的属性、方法，相互可见，实现内聚。
+      . 1个protocol可以被多个thing follow，实现继承、多态
 
   7.5、运行时错误处理
 
