@@ -56,19 +56,21 @@
   |_ Test
 
 7、s语言教程
-  s语言程序文件，以”.sc”作为扩展名。
+  s语言程序文件，以”.sc”作为扩展名，执行入口是main函数。
   7.1、HelloWorld.sc :
     use “system/io/output”;
-    protocol main{
-      void main();
-    }
+    protocol HelloWorld{
+      void say();
+    } 
 
-    thing thingHelloWorld follow main{
-        void main(){
-          output.println(“Hello World!”);
-        }
+    defiine thingHelloWorld follow HelloWorld{
+      void say(){
+        output.println(“Hello World!”);
+      }
     }
-    thingHelloWorld .main();
+    void main(){
+      thingHelloWorld .say();
+    }
 
   7.2、数据类型
     s语言中，所有的类型，都是protocol，程序运行的基本单位是thing，共有3种基础类型：
@@ -108,9 +110,11 @@
             output.println(self.str);
           }
       }
-      thingA.test();
-      a thingB = thingA.clone();
-      thingB.get().test();
+      void main(){
+        thingA.test();
+        a thingB = thingA.clone();
+        thingB.get().test();
+      }
 
       代码说明：
       get：   该方法为内置方法，用于定制thing，可以有多个get，通过参数类型及个数，重载
@@ -128,7 +132,77 @@
       . 1个protocol可以cite(引用/组合)至少1个其它的protocol
         多个被cite的protocol之间，protected修饰的属性、方法，相互可见，实现内聚。
       . 1个protocol可以被多个thing follow，实现继承、多态
+    协议，通过关键字“protocol”定义，通过关键字“cite”引用。
+    例：
+      protocol Animal{
+        tNumber legs = 2;
+        tString gender;
+        public void run();
+      }
 
+      protocol Person cite Animal{
+        public void useComputer();
+      }
+
+      protocol Meeting{
+        tBool present;
+        public void time(){
+          output.println(“It starts at p.m.”);
+        }
+        public void attend();
+      }
+      
+      difine Engineer follow Person,Metting{
+        tString gender = “male”;
+        tString name, role;
+        
+        get(tString name, tString role, tBool present){
+          this.name = name;
+          this.role = role;
+          this.present = present;
+        }
+        public void run(){
+          output.println(“run fast!”);
+        }
+        public void useComputer(){
+          output.println(“program with language s”);
+        }
+        public void attend(){
+          output.println(this.present);
+        }
+      }
+      
+      difine Salesman follow Person,Metting{
+        tString gender = “female”;
+        tString name;
+        
+        get(tString name, tBool present){
+          this.name = name;
+          output.println(this.present);
+        }
+        public void run(){
+          output.println(“run slowly!”);
+        }
+        public void useComputer(){
+          output.println(“keep sales records”);
+        }
+        public void attend(){
+          output.println(this.present);
+        }
+      }
+      
+      void main(){
+        Meeting a = Engineer.get(“a”, “java”, true);
+        Meeting b = Engineer.get(“b”, “c/c++”, true);
+        Meeting c = Salesman.get(“c”, true);
+        Meeting d = Salesman.get(“d”, false);
+
+        // 
+        a.attend();
+        b.attend();
+        c.attend();
+        d.attend();
+      }
   7.5、运行时错误处理
 
   7.6、作用域
