@@ -30,7 +30,7 @@
     . 1个protocol可以被多个thing follow
     . 一到多个thing，通过protocol，组合成一个s语言程序(文件)。
     . 每个thing必需follow（遵循）至少1个协议，follow同一协议的thing，可视作同一类型。
-    . thing可以定制(参数化），但没有面向对象语言中class（类）、object（实例）的含义。
+    . thing可以定制(参数化），具有类似面向对象语言中class（类）、object（实例）的含义。
 
 5、搭建开发环境
   下载编译器sc压缩包，如sc-0.1.linux-amd64.zip，解压到目录，即可使用，
