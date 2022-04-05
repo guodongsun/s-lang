@@ -390,19 +390,21 @@
     特性：
       . 方法执行完成时，自动释放资源
 
-  7.9、library(库)
+  7.9、内联汇编AT&T，并行/分布式编译
+
+  7.10、library(库)
       .本地库
       .网络传输
       .分布式运行
       .不同程序语言间的交互
 
-  7.10、plugin(插件)
+  7.11、plugin(插件)
 
-  7.11、business code layer
+  7.12、business code layer
 
-  7.12、跨端/多端运行
+  7.13、跨端/多端运行
 
-  7.13、webassembly
+  7.14、webassembly
 
 8、语言发展
   .建议
