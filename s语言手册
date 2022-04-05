@@ -251,7 +251,7 @@
       }
 
     catch 捕获机制：
-    。第1个catch，捕获之前代码的所有Exception
+    . 第1个catch，捕获之前代码的所有Exception
     . 第2个catch(含)，捕获与之前最近的catch之间的Exception
 
   7.6、多线程、高并发
