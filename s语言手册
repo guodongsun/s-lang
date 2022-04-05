@@ -19,7 +19,7 @@
   . 行数限制：单个文件有效代码行数限制
 
 3、语言目标/背景
-  在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及开发中的生产效率低下、跨端/平台应用复杂等实际问题，探索/寻求/提供一种解决方案。
+  在语言层面，为处理诸如线程性能、安全、稳定、分布式等技术问题，以及提高编程效率、跨端/平台应用复杂等实际问题，探索/寻求/提供一种解决方案。
 
 4、语言设计哲学/思想/方法论
   不同于面向过程的语言，如C，也不同于面向对象的语言如Java，S语言，是面向协议的语言，即POP（Protocol Oriented Programming），将世界抽象成两个核心部分：
@@ -63,7 +63,7 @@
       void say();
     } 
 
-    defiine thingHelloWorld follow HelloWorld{
+    define thingHelloWorld follow HelloWorld{
       void say(){
         output.println(“Hello World!”);
       }
