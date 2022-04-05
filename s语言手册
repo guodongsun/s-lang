@@ -74,9 +74,9 @@
 
   7.2、数据类型
     s语言中，所有的类型，都是protocol，程序运行的基本单位是thing，共有3种基础类型：
-      . 数字型：tNumber
-      . 字符(串)：tString
-      . 布尔型：tBool
+      . 数字型：Number
+      . 字符(串)：String
+      . 布尔型：Bool
     其它程序语言中的byte、short、float、double、char等类型，s语言中利用智能的类型优化子系统进行处理（编译时+运行时）。
 
   7.3、thing
@@ -98,10 +98,10 @@
       }
       define thingA follow A(){
           static{
-            public tNumber i = 1.0;
-            provite tString str= “2.0”;
+            public Number i = 1.0;
+            provite String str= “2.0”;
           }
-          public tBool b= true;
+          public Bool b= true;
 
           get(){
             output.println(this.thing);
@@ -135,8 +135,8 @@
     协议，通过关键字“protocol”定义，通过关键字“cite”引用。
     例：
       protocol Animal{
-        tNumber legs = 2;
-        tString gender;
+        Number legs = 2;
+        String gender;
         public void run();
       }
 
@@ -145,7 +145,7 @@
       }
 
       protocol Meeting{
-        tBool present;
+        Bool present;
         public void time(){
           output.println(“It starts at p.m.”);
         }
@@ -153,10 +153,10 @@
       }
       
       difine Engineer follow Person,Metting{
-        tString gender = “male”;
-        tString name, role;
+        String gender = “male”;
+        String name, role;
         
-        get(tString name, tString role, tBool present){
+        get(String name, String role, Bool present){
           this.name = name;
           this.role = role;
           this.present = present;
@@ -173,10 +173,10 @@
       }
       
       difine Salesman follow Person,Metting{
-        tString gender = “female”;
-        tString name;
+        String gender = “female”;
+        String name;
         
-        get(tString name, tBool present){
+        get(String name, Bool present){
           this.name = name;
           output.println(this.present);
         }
