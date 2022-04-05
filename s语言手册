@@ -8,7 +8,7 @@
     Joshua Sun
 
 2、语言特点
-  . 极致运行时效率：无垃圾回收器
+  . 极致运行时效率：编译型语言，无虚拟机、无垃圾回收器
   . 原生功能丰富：语言层面，支持高并发、高性能、分布式(事务)
   . 类型系统：弱类型，类型推导、转换、优化
   . 极简原则：最大化屏蔽Error、Warning，容易快速Debug
@@ -203,7 +203,56 @@
         c.attend();
         d.attend();
       }
-  7.5、运行时错误处理
+  7.5、异常、错误处理
+    对于程序运行中出现的意外情况，s语言，划分为Exception、Error 2大类，用分段捕获机制处理。
+    特性：
+      . Exception，可以捕获，如，除零、数组越界、数据库连接超时等，源程序对应的运行时		错误
+      . Error，不可以捕获，如，运行时库、宿主系统、硬件等错误
+      . 调试日志，都可以生成调试日志
+      . catch，Exception，通过catch捕获
+      . recover，catch块中 通过recover 恢复执行
+      . return，catch块中，通过return终止执行
+
+    例：
+      protocol divison{
+        Number divide();
+      }
+      difine Calculator follow divison{
+        Number divide(){
+          Number a = 1;
+          Number b = 2;
+          Number c = 3;
+          Number d = 0;
+          String e = “0”;
+
+          //
+          Number a2b = a/b;
+          Number a2c = a/c;
+          Number a2d = a/d; // #E1
+          catch{
+            case DivisionWithZeroException:
+            recover; // 程序从#E1处，继续向下执行
+            return 1; // 程序返回，后面代码不执行
+          }
+
+          //
+          Number b2c = b/c; 
+          Number b2d = b/d; // #E2
+          Number b/e = b/e; // #E3
+          catch{
+            case DivisionWithZeroException:
+            recover; // 程序从#E2处，继续向下执行
+            return 2; // 程序返回
+            case DivisionWithIllegalException:
+            recover; // 程序从#E3处，继续向下执行
+            return 3; // 程序返回
+          }
+        }
+      }
+
+    catch 捕获机制：
+    。第1个catch，捕获之前代码的所有Exception
+    . 第2个catch(含)，捕获与之前最近的catch之间的Exception
 
   7.6、作用域
 
