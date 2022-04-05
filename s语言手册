@@ -255,6 +255,133 @@
     . 第2个catch(含)，捕获与之前最近的catch之间的Exception
 
   7.6、多线程、高并发
+    s语言中，线程的表现形式为函数。
+    
+    特性：
+      . thread，函数声明前置该关键字，表示为线程
+      . volitile块，实现成员变量的可见性、函数代码的有序性
+      . lock块，保障线程同步
+      . 线程等待、唤醒，协作模型，3个角色：
+        . worker，包括等待唤醒的waiter，运行中的runner
+        . leader，管理waiter、runner的共享资源，当条件触发时，切换waiter、runner的运行/就绪/阻塞/状态
+        . 协作顺序
+          1、创建leader、resource、waiter、runner
+          2、resource、waiter、runner注册到leader
+          3、实现leader的线程协作Protocol方法
+          4、启动leader
+    例1：
+      Protocal machine{
+        void work();
+      }
+      define CleaningMachine(){
+        Number number;
+        String type;
+
+        //
+        volatile{
+          Number cleanedProgress;
+          Number uncleanedProgress;
+        }
+
+        get(Number number, String type){
+          this.number = number;
+          this.type = type;
+        }
+        thread void work(){
+          lock(this){
+            volatile{
+              this.cleanedProgress++;
+              --this.uncleanedProgress;
+            }
+            output.println(“cleaning”);
+          }
+        }
+      }
+
+    例2：
+    Protocol ThreadResource{
+      Array resource();
+    }
+    Protocol ThreadCoordinate{
+      ThreadProduce in;
+      ThreadConsumer out;
+      TreadResource resource;
+      void coordinate();
+      
+      void registerIn(ThreadProduce producer){
+        this.in = producer;
+      }
+      void registerOut(ThreadConsumer consumer){
+        this.out = consumer;
+      }
+    }
+    Protocol ThreadProduce{
+      void put();
+    }
+    Protocol ThreadConsumer{
+      void take();
+    }
+
+    define MoneyBox follow ThreadResource{
+      Array resource(){
+        return Array.get(Number, 10); // 数组长度10，类型Number
+      }
+    }
+    define Producer follow ThreadProducer{
+      void put(ThreadResource resource){
+        for(;;){
+          resource.push(1);
+        }
+      }
+    }
+    define Consumer follow ThreadConsumer{
+      void take(ThreadResource resource){
+        for(;;){
+          resource.pop();
+        }
+      }
+    }
+    define Leader follow ThreadCoordinate{
+      get(TreadResource resource){
+        this.resource = resource;
+      }
+
+      void coordinate(){
+        if(this.resource.length > 0){
+          this.out.notify();
+          // this.out.nofifyAll();
+        }
+        else{
+          this.out.wait();
+        }
+
+        //
+        if(this.resource.length <= 0){
+          this.in.notify();
+          // this.in.nofifyAll();
+        }
+        else{
+          this.in.wait();
+        }
+
+        //
+        this.in.put(this.resource); // 启动线程 #in1
+        this.in.put(this.resource); // 启动线程 #in2
+
+        this.out.take(this.resource); // 启动线程 #out1
+        this.out.take(this.resource); // 启动线程 #out2
+        this.out.take(this.resource); // 启动线程 #out3
+      }
+    }
+    void main(){
+      TreadResource moneyBox = MoneyBox.get();
+      ThreadCoordinate leader = Leader.get(moneyBox);
+      ThreadProducer producer = Producer.get();
+      ThreadConsumer consumer= Consumer.get();
+      leader.registerIn(producer);
+      leader.registerOut(consumer);
+      leader.coordinate();
+    }
     
   7.7、作用域
   
