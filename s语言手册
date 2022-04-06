@@ -58,7 +58,7 @@
 7、s语言教程
   s语言程序文件，以”.sc”作为扩展名，执行入口是main函数。
   7.1、HelloWorld.sc :
-    use “io/system/output”;
+    use “io/system/out”;
     protocol HelloWorld{
       void say();
     } 
@@ -92,7 +92,7 @@
       . thing可以定制(参数化），但没有面向对象语言中class（类）、object（实例）的含义。
     thing通过“define”关键字创建。
     例：
-      use “io/system/output”
+      use “io/system/out”
       protocol A{
         test();
       }
