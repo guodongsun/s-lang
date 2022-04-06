@@ -5,10 +5,10 @@
   s语言作者：
     Joshua Sun
   contributors:
-    Joshua Sun
+    . Joshua Sun
 
 2、语言特点
-  . 极致运行时效率：编译型语言，无虚拟机、无垃圾回收器
+  . 运行时高效：编译型语言，无虚拟机、无垃圾回收器
   . 原生功能丰富：语言层面，支持高并发、高性能、分布式(事务)
   . 类型系统：弱类型，类型推导、转换、优化
   . 极简原则：最大化屏蔽Error、Warning，容易快速Debug
@@ -58,14 +58,14 @@
 7、s语言教程
   s语言程序文件，以”.sc”作为扩展名，执行入口是main函数。
   7.1、HelloWorld.sc :
-    use “system/io/output”;
+    use “io/system/output”;
     protocol HelloWorld{
       void say();
     } 
 
     define thingHelloWorld follow HelloWorld{
       void say(){
-        output.println(“Hello World!”);
+        out.println(“Hello World!”);
       }
     }
     void main(){
@@ -92,7 +92,7 @@
       . thing可以定制(参数化），但没有面向对象语言中class（类）、object（实例）的含义。
     thing通过“define”关键字创建。
     例：
-      use “system/io/output”
+      use “io/system/output”
       protocol A{
         test();
       }
@@ -104,10 +104,10 @@
           public Bool b= true;
 
           get(){
-            output.println(this.thing);
+            out.println(this.thing);
           }
           public test(){
-            output.println(self.str);
+            out.println(self.str);
           }
       }
       void main(){
@@ -147,7 +147,7 @@
       protocol Meeting{
         Bool present;
         public void time(){
-          output.println(“It starts at p.m.”);
+          out.println(“It starts at p.m.”);
         }
         public void attend();
       }
@@ -162,13 +162,13 @@
           this.present = present;
         }
         public void run(){
-          output.println(“run fast!”);
+          out.println(“run fast!”);
         }
         public void useComputer(){
-          output.println(“program with language s”);
+          out.println(“program with language s”);
         }
         public void attend(){
-          output.println(this.present);
+          out.println(this.present);
         }
       }
       
@@ -178,16 +178,16 @@
         
         get(String name, Bool present){
           this.name = name;
-          output.println(this.present);
+          out.println(this.present);
         }
         public void run(){
-          output.println(“run slowly!”);
+          out.println(“run slowly!”);
         }
         public void useComputer(){
-          output.println(“keep sales records”);
+          out.println(“keep sales records”);
         }
         public void attend(){
-          output.println(this.present);
+          out.println(this.present);
         }
       }
       
@@ -243,7 +243,7 @@
             case DivisionWithZeroException:
             recover; // 程序从#E2处，继续向下执行
             return 2; // 程序返回
-            case DivisionWithIllegalException:
+            case DivisionWithIllegalTypeException:
             recover; // 程序从#E3处，继续向下执行
             return 3; // 程序返回
           }
@@ -293,7 +293,7 @@
               this.cleanedProgress++;
               --this.uncleanedProgress;
             }
-            output.println(“cleaning”);
+            out.println(“cleaning”);
           }
         }
       }
@@ -393,10 +393,19 @@
   7.9、内联汇编AT&T，并行/分布式编译
 
   7.10、library(库)
-      .本地库
-      .网络传输
-      .分布式运行
-      .不同程序语言间的交互
+      . SDK protocol 分类：
+        . lang： 基础protocol，包括Protocol、Math、String、System、Thread等
+        . util：	工具protocol，包括日期和时间、国际化和各种实用工具
+        . io：	  输入/输出protocol，包括文件系统等提供系统的输入与输出
+        . net：	网络protocol，包括网络应用与开发
+        . sql：	数据源protocol，数据源/数据库操作。
+        . graph：图形protocol
+        . text：	文本protocol
+
+    	. 本地库
+    	. 网络传输
+    	. 分布式运行
+    	. 不同程序语言间的交互
 
   7.11、plugin(插件)
 
