@@ -33,6 +33,10 @@
     . 每个thing必需follow（遵循）至少1个协议，follow同一协议的thing，可视作同一类型。
     . thing可以定制(参数化），具有类似面向对象语言中class（类）、object（实例）的含义。
     . specific 规格化，定义协议中的属性 
+    . 注解特性
+      . @specific 用在协议属性，用于规格化/实例化/具体化属性值
+      . @listen   用在协议方法，用于说明该方法是主调方法，协议使用函数，需要功能
+      . @call     用在协议方法，用于说明该方法是被调方法，协议提供函数，提供功能
     
 5、搭建开发环境
   下载编译器sc压缩包，如sc-0.1.linux-amd64.zip，解压到目录，即可使用，
@@ -66,17 +70,36 @@
       @specific("SayHelloWorldTimes");
       Number times;
       
+      @listen
       void say();
     } 
 
-    define thingHelloWorld follow HelloWorld{
+    specific SayHelloWorldTimes{
+      Number times = 3;
+    }
+
+    define ThingHelloWorld follow HelloWorld{
       void say(){
         out.println(“Hello World!”);
       }
     }
     
+    protocol SayWords(){
+      @call
+      void saySomeThing();
+    }
+    
+    define Person follow SayWords{
+      void saySomeThing(){
+        HelloWorld hw = ThingHelloWorld.get();
+        hw.say();
+      }
+    }
+    
+    @call
     void main(){
-      thingHelloWorld .say();
+      SayWords zhangSan = Person.get();
+      zhangSan.saySomeThing();
     }
 
   7.2、数据类型
