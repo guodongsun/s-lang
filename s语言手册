@@ -35,8 +35,8 @@
     . specific 规格化，定义协议中的属性 
     . 注解特性
       . @specific 用在协议属性，用于规格化/实例化/具体化属性值
-      . @listen   用在协议方法，用于说明该方法是主调方法，协议使用函数，需要功能
-      . @call     用在协议方法，用于说明该方法是被调方法，协议提供函数，提供功能
+      . @in       用在协议方法，用于说明该方法是主调方法，协议使用函数，需要功能
+      . @out      用在协议方法，用于说明该方法是被调方法，协议提供函数，提供功能
     
 5、搭建开发环境
   下载编译器sc压缩包，如sc-0.1.linux-amd64.zip，解压到目录，即可使用，
@@ -70,7 +70,7 @@
       @specific("SayHelloWorldTimes");
       Number times;
       
-      @listen
+      @in
       void say();
     } 
 
@@ -85,7 +85,7 @@
     }
     
     protocol SayWords(){
-      @call
+      @out
       void saySomeThing();
     }
     
@@ -96,7 +96,7 @@
       }
     }
     
-    @call
+    @out
     void main(){
       SayWords zhangSan = Person.get();
       zhangSan.saySomeThing();
