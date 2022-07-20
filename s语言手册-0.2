@@ -49,7 +49,7 @@
   A、定义子程序
     A.1、Tools.s
       namespace com.test.www.sub
-      import system.out as outAlias;
+      use system.out as outAlias;
       follow:
         // todo
       data:
@@ -87,7 +87,7 @@ B、使用子程序
     CallProtocol2.protocol
     namespace com.test.www.protocol;
 
-    import namespace com.test.www.protocol.CallProtocol1;
+    use namespace com.test.www.protocol.CallProtocol1;
 
     follow:
       CallProtocol1(,CallProtocol1)
@@ -100,8 +100,8 @@ B、使用子程序
     Call.s
     namespace com.test.www
     
-    import com.test.www.protocol.*;
-    import com.test.www.sub.*;
+    use com.test.www.protocol.*;
+    use com.test.www.sub.*;
     
     follow:
       CallProtocol1;
