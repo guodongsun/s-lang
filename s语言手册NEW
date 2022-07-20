@@ -1,0 +1,107 @@
+                                                                            S语言手册
+1、数据类型
+  1.1、基本类型
+    byte、short、int、long、float、double、boolean、char、string
+  1.2、容器数据类型
+    array、set、list、map
+
+2、运算符
+  赋值运算：=
+  算数运算：+、-、*、/、%
+  逻辑运算：&&、||、!
+  位运算：& 、^、|
+  自增：++、--、&=、|=、^=
+
+3、流程控制
+  if、elseif、else
+  switch
+  for、foreach、while、do-while
+  continue、break
+
+4、函数
+  参数：基本类型、函数、闭包
+  返回：基本类型、函数、闭包
+  访问控制：public=所有可见，private=当前名称空间可见，package=名称空间/子空间可见
+  特性：
+    同一名称空间下，同一方法名，可以重写
+    不同名称空间下，同一方法名，可以重载
+    支持泛型
+    多态，运行时绑定不同的方法
+    封装，基本数据，绑定到名称空间
+    继承：不同名称空间，可以重载
+
+5、名称空间
+  全局变量列表：仅对当前名称空间可见，
+  函数列表：当前名称空间中定义的函数
+  self：指向名称空间
+
+6、导入
+  全部导入：导入名称空间，所有的public、package函数
+  部分导入：导入名称空间，选择的public、package函数
+  别名导入：导入名称空间，选择的public、package函数，并重命名
+7、协议
+  定义协议：protocol
+  遵守协议：follow
+8、示例：
+A、定义子程序
+  A.1、Tools.s
+    namespace com.test.www.sub
+    import system.out as outAlias;
+    follow:
+
+    data:
+      string message = “this is tool”;
+    func:
+      public:
+        void useTool(string message){
+          if(message != null){
+            self.message = message;
+          }
+          render();
+          outAlias(self.message);
+        }
+      package:
+        void helpTool(){
+          out.tool(“package call”);
+        }
+      private:
+        void render(){
+          self.message += “,rendered”;
+        }
+B、使用子程序
+  B.1、定义子协议
+    CallProtocol1.protocol
+    namespace com.test.www.protocol;
+
+    follow:
+    data:
+    func:
+      public 
+        void callTool();
+  B.2、定义协议，引用子协议
+    CallProtocol2.protocol
+    namespace com.test.www.protocol;
+
+    import namespace com.test.www.protocol.CallProtocol1;
+
+    follow:
+      CallProtocol1(,CallProtocol1)
+    data:
+
+    func:
+      public void test();
+
+  B.3、使用协议、函数
+    Call.s
+    namespace com.test.www
+    
+    import com.test.www.sub.*;
+    
+    data:
+    func:
+      public void callTool(){
+        useTool();
+      }
+      public void test(){
+        // todo
+      }
