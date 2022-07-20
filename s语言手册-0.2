@@ -40,42 +40,46 @@
   全部导入：导入名称空间，所有的public、package函数
   部分导入：导入名称空间，选择的public、package函数
   别名导入：导入名称空间，选择的public、package函数，并重命名
+  
 7、协议
   定义协议：protocol
   遵守协议：follow
+  
 8、示例：
-A、定义子程序
-  A.1、Tools.s
-    namespace com.test.www.sub
-    import system.out as outAlias;
-    follow:
-
-    data:
-      string message = “this is tool”;
-    func:
-      public:
-        void useTool(string message){
-          if(message != null){
-            self.message = message;
+  A、定义子程序
+    A.1、Tools.s
+      namespace com.test.www.sub
+      import system.out as outAlias;
+      follow:
+        // todo
+      data:
+        string message = “this is tool”;
+      func:
+        public:
+          void useTool(string message){
+            if(message != null){
+              self.message = message;
+            }
+            render();
+            outAlias(self.message);
           }
-          render();
-          outAlias(self.message);
-        }
-      package:
-        void helpTool(){
-          out.tool(“package call”);
-        }
-      private:
-        void render(){
-          self.message += “,rendered”;
-        }
+        package:
+          void helpTool(){
+            out.tool(“package call”);
+          }
+        private:
+          void render(){
+            self.message += “,rendered”;
+          }
 B、使用子程序
   B.1、定义子协议
     CallProtocol1.protocol
     namespace com.test.www.protocol;
 
     follow:
+      // todo
     data:
+      // todo
     func:
       public 
         void callTool();
@@ -88,7 +92,7 @@ B、使用子程序
     follow:
       CallProtocol1(,CallProtocol1)
     data:
-
+      // todo
     func:
       public void test();
 
@@ -96,9 +100,13 @@ B、使用子程序
     Call.s
     namespace com.test.www
     
+    import com.test.www.protocol.*;
     import com.test.www.sub.*;
     
+    follow:
+      CallProtocol1;
     data:
+      // todo
     func:
       public void callTool(){
         useTool();
