@@ -35,6 +35,7 @@
     继承：不同名称空间，可以重载
 
 5、名称空间
+  文件列表：同一名称空间下，多个文件，文件名作为子名称空间
   全局变量列表：仅对当前名称空间可见，
   函数列表：当前名称空间中定义的函数
   self：指向名称空间
@@ -51,7 +52,7 @@
 8、示例：
   A、定义子程序
     A.1、Tools.s
-      namespace com.test.www.sub.Tool;
+      namespace com.test.www.sub;
       use system.out as outAlias;
       follow:
         // todo
@@ -77,7 +78,7 @@
 B、使用子程序
   B.1、定义子协议
     CallProtocol1.protocol
-    namespace com.test.www.protocol.CallProtocol1;
+    namespace com.test.www.protocol;
 
     follow:
       // todo
@@ -88,7 +89,7 @@ B、使用子程序
         void callTool();
   B.2、定义协议，引用子协议
     CallProtocol2.protocol
-    namespace com.test.www.protocol.CallProtocol2;
+    namespace com.test.www.protocol;
 
     use com.test.www.protocol.CallProtocol1;
 
@@ -103,8 +104,8 @@ B、使用子程序
     Call.s
     namespace com.test.www
     
-    use com.test.www.protocol.CallProtocol2;
-    use com.test.www.sub.Tool;
+    use com.test.www.protocol.*;
+    use com.test.www.sub.*;
     
     follow:
       CallProtocol1;
