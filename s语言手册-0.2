@@ -51,7 +51,7 @@
 8、示例：
   A、定义子程序
     A.1、Tools.s
-      namespace com.test.www.sub
+      namespace com.test.www.sub.Tool;
       use system.out as outAlias;
       follow:
         // todo
@@ -77,7 +77,7 @@
 B、使用子程序
   B.1、定义子协议
     CallProtocol1.protocol
-    namespace com.test.www.protocol;
+    namespace com.test.www.protocol.CallProtocol1;
 
     follow:
       // todo
@@ -88,7 +88,7 @@ B、使用子程序
         void callTool();
   B.2、定义协议，引用子协议
     CallProtocol2.protocol
-    namespace com.test.www.protocol;
+    namespace com.test.www.protocol.CallProtocol2;
 
     use com.test.www.protocol.CallProtocol1;
 
@@ -103,8 +103,8 @@ B、使用子程序
     Call.s
     namespace com.test.www
     
-    use com.test.www.protocol.*;
-    use com.test.www.sub.*;
+    use com.test.www.protocol.CallProtocol2;
+    use com.test.www.sub.Tool;
     
     follow:
       CallProtocol1;
