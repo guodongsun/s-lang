@@ -1,0 +1,135 @@
+/* programe */
+<programe>                      ::= <namespace>{<use>}{<follow>}{<func>};
+    /* namespace */
+    <namespace>                     ::= namespace<white_st><namespace> | {<namespace>}<string_ln> | {<string_ln>.};
+        /*string only include letter、number*/
+        <string_ln>                     ::= {<string_ln>}(<letter>|number>) | {<letter>|number>}
+        /* white space */
+        <white_st>                  ::= " " | "\t"
+
+    /* use */
+    <use>                       ::= use<white_st><use> | {<use>}<string_ln> | {<string_ln>.};
+
+    /* follow protocol with general type */
+    <follow>                    ::= follow:<follow> | {<string_identifer>["("<general_type>")";]}
+        <string_identifer>          ::= <string_identifer>(<letter> | number> | <string_identifer_symbol>) |
+                                        {<letter> | <number> | <string_identifer_symbol>}
+        <string_identifer_symbol>   ::= _ | $
+        <string_empty>          ::= ""
+        <white_rn>                  ::= "\r" | "\n"
+        <general_type>          ::= <general_type><string_identifer> | {<string_identifer>,}
+
+    /* data */
+    <data>                      ::= data:<data> | <data><data_define> | {<data_define>}
+        <data_define>               ::= <type><data_define><string_identifier>[<assign>] | {<string_identifier>[<assign>],};
+            <data_type>             ::= [const](byte|int|short|long|float|double|bool|char|string|<pointer>|<struct>|<array>|<set>|<list>|<map>)
+            <assign>            ::= <assign>[<alu_symbol_2>]=<expression>
+                <expression>    ::= <expression><alu_symbol_2>["("]<expression>[")"] |
+                                    ["("] <expression><alu_symbol_2><expression>[")"]
+                                    {<literal> | ([alu_symbol_1]<identifier>[alu_symbol_1] | <func_call>)}
+
+                    <literal>   ::= ("|')<literal>{<letter>|<symbol_all>}("|') |
+                                    {<letter>|<symbol_all>} | <literal><number> |
+                                    [-]<literal><number>[.] | <number>
+                    <alu_symbol_1>      ::= ++ | --
+                    <alu_symbol_2>      ::= + | - | * | / | % | & | "|" | "<<" | ">>" | ^
+                    <func_call>         ::= <indentifier>"("{<func_param>}")"[;] | lanmda
+                        <func_param>        ::= {<func_param>}{<expression>} |
+                                                {<expression>,} | lanmda
+                                <lanmda>        ::= "(" {<data_define>}" "){" <sentence> }"
+                    <func_return_type>  ::= <data_type> | void
+                    <func_define>       ::= <func_return_type><indentifier>"(" {<data_define>,} "){" <sentence> }"
+                    <sentence>          ::= {<data_define>} | <assign> | <branch> | <loop> | <return> | <try_catch>
+                        <branch>        ::= <if_branch> | <if_branch><else_if_branch><else_branch> |
+                                            <if_branch><else_if_branch> | <if_branch><else_branch> |
+                                            <switch>
+                                <logic_symbol>          ::= "&&" | "||" | "!"
+                                <compare_symbol>        ::= > | >= | < | <= | !=
+                                <logic_expression>      ::= "("<logic_expression><logic_symbol>")"(<expression><compare_symbol><expression>|<compare_symbol><expression>) |
+                                                            <logic_expression><logic_symbol>"("(<expression><compare_symbol><expression>|<compare_symbol><expression>)")" |
+                                                            <expression><compare_symbol><expression>|<compare_symbol><expression>
+
+                                <if_branch>             ::= if"("<logic_expression>")"          ["{"] <sentence> ["}"]
+                                <else_if_branch>        ::= else if "("<logic_expression>")"    ["{"] <sentence> ["}"]
+                                <else_branch>           ::= else                                ["{"] <sentence> ["}"]
+                                <switch_branch>         ::= switch"("<expression>"){" case"("<expression>"):"{<sentence>}break; |default:{<sentence>}break; "}"
+                        <loop>          ::= <for_loop> | <for_each_loop> | <while_loop> | <do_while_loop>
+                                <define>                ::= <data_define> | <func_define>
+                                <for_loop>              ::= for"("<for_loop>;<for_loop>;<for_loop>")" ["{"]<sentence>["}"] | {<define><expression>}
+                                <for_each_loop>         ::= for"("<define> in <expression>)" ["{"]<sentence>["}"]
+                                <while_loop>            ::= while"("<logic_expression>)" ["{"]<sentence>["}"]
+                                <do_while_loop>         ::= do["{"]<sentence>["}"]while"("<logic_expression>)";
+
+                        <return>        ::= return ["("<data_type>")"]<expression>;
+
+                        // Exception structure is a struct, Emmit a Exception by using system func：emmit(struct),which is in package(system.exception)
+                        <try_catch>     ::= try"{"<sentence>"}"{catch"("{<string_identifier><string_identifier>,}<string_identifier><string_identifier>"){"<sentence>"}"}
+
+    /* container type */
+    <container_type>    ::=     <array> | <struct> | <enum> | <set> | <list> | <map>
+        <array>                 ::= <array><data_type>{"[]"}"[]"<identifier><array_assign> | {<data_type>{"[]"}"[]"<identifier><array_assign>};
+            <array_assign>          ::= ="{"{<array_assign>|<expression>,}"}"
+        <set>                   ::= set<set><identifier>"<"<general_type>">"<set_assign> | {<identifier>"<"<general_type>">"<set_assign>}
+            <set_assign>            ::= ="{"<expression>,"}"
+        <list>                  ::= list<list><identifier>"<"<general_type>">"<list_assign> | {<identifier>"<"<general_type>">"<list_assign>}
+            <list_assign>           ::= ="{"<expression>,"}"
+        <struct>                ::= struct<identifier>"{" <struct> "}" | {(<container_type>|<data_define>),}
+            <struct_assign>         ::= ="{"<expression>,"}"
+        <enum>                  ::= enum<identifier>"{" <enum> "}" | {(<container_type>|<data_define>),}
+            <enoum_assign>          ::= ="{"<expression>,"}"
+        <map>                   ::= map {<identifier>"<"<data_type>|<general_type>,<data_type>|<general_type>|<container_type>">"<map_assign>}
+            <map_assign>            ::= ="{"{<expression>=><expression>,}"}"
+
+    /* data_referenct */
+    <alias_reference>   ::=     &(<string_identifer>|<func_define>)
+    <value_reference>   ::=     <string_identifer>-><string_identifer>
+    <pointer_reference> ::=     <string_identifer>-><string_identifer>
+
+    /* comment */
+    <comment>           ::=
+
+    /* keyword */
+    <keyword>           ::=
+
+    /* try-catch */
+    // function body try-catch
+
+ // slang code:example
+ // test.s
+ namespace com.test.www.example;
+
+ use system.io;
+ use com.test.www.example.protocol.PTest;
+
+follow:
+        PTest1,Ptest2
+data:
+        map<int, double> map_1 = {1=>1.1, 2=>2.2};
+        struct           st_1  = {int a=1, doubleb=0.2};
+
+func:
+public:
+        PTest1Func1: void(){
+            out("PTest1Func1");
+        }
+        PTest2Func2:  void(){
+            try{
+                out("PTest1Func2");
+            }
+            catch(ExceptionA a, ExceptionB b){
+                out(a->error);
+                out(b->error);
+            }
+        }
+package:
+        friendFunc: void(){
+            out("friendFunc");
+        }
+
+private:
+        helper: (){
+            out("helperFunc");
+        }
+error:
+    //todo
+
