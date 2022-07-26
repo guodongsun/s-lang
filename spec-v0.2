@@ -22,7 +22,7 @@
     /* data */
     <data>                      ::= data:<data> | <data><data_define> | {<data_define>}
         <data_define>               ::= <type><data_define><string_identifier>[<assign>] | {<string_identifier>[<assign>],};
-            <data_type>             ::= [const](byte|int|short|long|float|double|bool|char|string|<pointer>|<struct>|<array>|<set>|<list>|<map>)
+            <data_type>             ::= [const](byte|int|short|long|float|double|bool|char|string|<pointer>|<container_type>)
             <assign>            ::= <assign>[<alu_symbol_2>]=<expression>
                 <expression>    ::= <expression><alu_symbol_2>["("]<expression>[")"] |
                                     ["("] <expression><alu_symbol_2><expression>[")"]
@@ -36,10 +36,10 @@
                     <func_call>         ::= <indentifier>"("{<func_param>}")"[;] | lanmda
                         <func_param>        ::= {<func_param>}{<expression>} |
                                                 {<expression>,} | lanmda
-                                <lanmda>        ::= "(" {<data_define>}" "){" <sentence> }"
+                                <lanmda>        ::= "(" {<data_define>,}" "){" <sentence> }"
                     <func_return_type>  ::= <data_type> | void
                     <func_define>       ::= <func_return_type><indentifier>"(" {<data_define>,} "){" <sentence> }"
-                    <sentence>          ::= {<data_define>} | <assign> | <branch> | <loop> | <return> | <try_catch>
+                    <sentence>          ::= {<sentence>}{{<data_define>} | <assign> | <branch> | <loop> | <return> | <try_catch>}
                         <branch>        ::= <if_branch> | <if_branch><else_if_branch><else_branch> |
                                             <if_branch><else_if_branch> | <if_branch><else_branch> |
                                             <switch>
@@ -52,7 +52,7 @@
                                 <if_branch>             ::= if"("<logic_expression>")"          ["{"] <sentence> ["}"]
                                 <else_if_branch>        ::= else if "("<logic_expression>")"    ["{"] <sentence> ["}"]
                                 <else_branch>           ::= else                                ["{"] <sentence> ["}"]
-                                <switch_branch>         ::= switch"("<expression>"){" case"("<expression>"):"{<sentence>}break; |default:{<sentence>}break; "}"
+                                <switch_branch>         ::= switch"("<expression>"){" case"("<expression>"):"<sentence>break; |default:{<sentence>}break; "}"
                         <loop>          ::= <for_loop> | <for_each_loop> | <while_loop> | <do_while_loop>
                                 <define>                ::= <data_define> | <func_define>
                                 <for_loop>              ::= for"("<for_loop>;<for_loop>;<for_loop>")" ["{"]<sentence>["}"] | {<define><expression>}
