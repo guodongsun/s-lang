@@ -108,7 +108,7 @@ data:
         struct           st_1  = {int a=1, doubleb=0.2};
 
 func:
-public:
+    public:
         PTest1Func1: void(){
             out("PTest1Func1");
         }
@@ -121,12 +121,12 @@ public:
                 out(b->error);
             }
         }
-package:
+    package:
         friendFunc: void(){
             out("friendFunc");
         }
 
-private:
+    private:
         helper: (){
             out("helperFunc");
         }
